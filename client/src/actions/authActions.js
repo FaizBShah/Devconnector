@@ -1,5 +1,6 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
+import jwt_decode from "jwt-decode";
 
 import { GET_ERRORS, SET_CURRENT_USER } from './types';
 
@@ -24,8 +25,9 @@ export const loginUser = (userData) => dispatch => {
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
-      const base64Url = token.split('.')[1];
-      const decoded = JSON.parse(window.atob(base64Url));
+      // const base64Url = token.split('.')[1];
+      // const decoded = JSON.parse(window.atob(base64Url));
+      const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
     })

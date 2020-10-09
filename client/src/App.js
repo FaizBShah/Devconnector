@@ -6,6 +6,7 @@ import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
 import PrivateRoute from './components/common/PrivateRoute';
+import jwt_decode from "jwt-decode";
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -30,8 +31,10 @@ if(localStorage.jwtToken) {
   // Set auth token header auth
   setAuthToken(localStorage.jwtToken);
   // Decode token and get user info
-  const base64Url = localStorage.jwtToken.split('.')[1];
-  const decoded = JSON.parse(window.atob(base64Url));
+  // const base64Url = localStorage.jwtToken.split('.')[1];
+  // const decoded = JSON.parse(window.atob(base64Url));
+  const token = localStorage.jwtToken;
+  const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
   // Check for expired token
